@@ -47,13 +47,31 @@ class WidontTwigExtension extends \Twig_Extension
     }
 
     /**
-     * @return string
+     * Replaces the space between the nth-last words in a string with ``&nbsp;``
+     * Works in these block tags ``(h1-h6, p, li)`` and also accounts for 
+     * potential closing inline elements ``a, em, strong, span, b, i``
+     * 
+     * Empty HTMLs shouldn't error
+     *
+     * @param   $text Text to transform
+     * @param   $numberOfWords Number of words to force break
+     * @param   $outputRaw If we should output raw or not
+     *
+     * @return  The string with widows (hopefully) eliminated
      */
-    private function widont( $text )
+    public function widont ( $text = "", $numberOfWords = 1, $outputRaw = true )
     {
-      // Taken from https://github.com/habari-extras/typogrify/blob/master/php-typogrify.php
-      $widont_finder = "/([^\s])\s+(((<(a|span|i|b|em|strong|acronym|caps|sub|sup|abbr|big|small|code|cite|tt)[^>]*>)*\s*[^\s<>]+)(<\/(a|span|i|b|em|strong|acronym|caps|sub|sup|abbr|big|small|code|cite|tt)>)*[^\s<>]*\s*(<\/(p|h[1-6]|li)>|$))/i";
-                      
-      return preg_replace($widont_finder, '$1&nbsp;$2', $text);
+      $tags = "a|span|i|b|em|strong|acronym|caps|sub|sup|abbr|big|small|code|cite|tt";
+
+      // Taken from https://github.com/davethegr8/cakephp-typogrify-helper/blob/master/views/helpers/typogrify.php
+      // This regex is a beast, tread lightly
+      $regex = "/([^\s])\s+(((<($tags)[^>]*>)*\s*[^\s<>]+)(<\/($tags)>)*[^\s<>]*\s*(<\/(p|h[1-6]|li)>|$))/i";
+      $string = $text;
+
+      for ($i = 0; $i < $numberOfWords; $i++) {
+        $string = preg_replace($regex, '$1&nbsp;$2', $string);
+      }
+
+      return $outputRaw ? TemplateHelper::getRaw($string) : $string;
     }
 }

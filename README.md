@@ -1,6 +1,8 @@
-# Widont plugin for Craft CMS
+# Widont Twig Filter for Craft CMS
 
 Widont is a twig filter that prevents widow words in paragraphs.
+It replaces the space between the nth-last words in a string with ``&nbsp;``
+Works in these block tags ``(h1-h6, p, li)`` and also accounts for potential closing inline elements ``a, em, strong, span, b, i``
 
 ## Installation
 
@@ -19,16 +21,30 @@ Widont works on Craft 2.5.x.
 
 ## Example
 
-The following rich text field output:
+The following:
 
 ```html
+{{ someRichText | widont }}
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 ```
 
-turns into this:
+output this:
 
 ```html
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing&nbsp;elit.</p>
+```
+
+But you can also control how many words to `force break`:
+
+```html
+{{ someRichText | widont(2) }}
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+```
+
+output this:
+
+```html
+<p>Lorem ipsum dolor sit amet, consectetur&nbsp;adipisicing&nbsp;elit.</p>
 ```
 
 ## Credit

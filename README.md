@@ -1,8 +1,8 @@
 # Widont Twig Filter for Craft CMS
 
-Widont is a twig filter that prevents widow words in paragraphs
-It replaces the space between the nth-last words in a string with ``&nbsp;``.
-It works in these block tags ``(h1-h6, p, li)``, and also accounts for potential closing inline elements ``a, em, strong, span, b, i``
+Widont is a twig filter that prevent widow words in paragraphs.  
+It replaces the space between the last word(s) in a string with ``&nbsp;``.  
+It works in these block tags ``(h1-h6, p, li)``, and also accounts for these potential closing inline elements ``a|span|i|b|em|strong|acronym|caps|sub|sup|abbr|big|small|code|cite|tt``.
 
 ## Installation
 
@@ -19,7 +19,11 @@ Widont works on Craft 2.5.x.
 {{ someRichText | widont }}
 ```
 
-## Example
+## Parameters (optional)
+* **Words** [Number = 1] - *Number of words to force break*
+* **Raw** [Bool = true] - *Return raw output via TemplateHelper::getRaw()*
+
+## Examples
 
 The following:
 
@@ -46,8 +50,8 @@ output this:
 ```
 
 ## Credit
-Widont implementation taken from [TypogrifyHelper for CakePHP](https://github.com/davethegr8/cakephp-typogrify-helper).
-Spider Web icon by [Muhamad Ulum](https://thenounproject.com/term/spider/228763/) from the Noun Project.
+Widont php implementation taken from [TypogrifyHelper for CakePHP](https://github.com/davethegr8/cakephp-typogrify-helper).  
+Spider Web icon by [Muhamad Ulum](https://thenounproject.com/term/spider/228763/) from the [Noun Project](https://thenounproject.com).
 
 ## Changelog
 
